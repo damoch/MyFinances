@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyFinances"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="525"
+        Closing="DataWindow_Closing"  >
     <Grid>
-        
+        <Grid HorizontalAlignment="Left" Height="299" Margin="10,10,0,0" VerticalAlignment="Top" Width="497">
+            <ListBox x:Name="TransactionsListBox" HorizontalAlignment="Left" Height="225" Margin="10,41,0,0" VerticalAlignment="Top" Width="156"/>
+            <Label x:Name="label" Content="Transactions" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="117"/>
+            <Button x:Name="AddTransactionButton" Content="Add new" HorizontalAlignment="Left" Margin="10,271,0,0" VerticalAlignment="Top" Width="75" Click="AddTransactionButton_Click"/>
+        </Grid>
+
     </Grid>
+    
 </Window>

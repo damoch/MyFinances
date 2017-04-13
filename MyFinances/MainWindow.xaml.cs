@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,35 @@ namespace MyFinances
     /// </summary>
     public partial class MainWindow : Window
     {
+        public  Controller Controller { get; set; }
+        private Window _currentModal;
+        private bool _modalWindowOpened;
         public MainWindow()
         {
+            Controller = new Controller();
+            _modalWindowOpened = false;
             InitializeComponent();
+        }
+
+        private void AddTransactionButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!_modalWindowOpened)
+            {
+                _currentModal = new AddTransaction(this);
+                _currentModal.Show();
+                _modalWindowOpened = true;
+            }
+
+        }
+
+        public void ModalWindowClosed()
+        {
+            _modalWindowOpened = false;
+        }
+
+        private void DataWindow_Closing(object sender, CancelEventArgs e)
+        {
+            _currentModal.Close();
         }
     }
 }
