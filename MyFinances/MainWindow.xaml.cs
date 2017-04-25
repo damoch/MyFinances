@@ -29,6 +29,7 @@ namespace MyFinances
             Controller = new Controller();
             _modalWindowOpened = false;
             InitializeComponent();
+            RefreshCurrentView();
         }
 
         private void AddTransactionButton_Click(object sender, RoutedEventArgs e)
@@ -42,9 +43,19 @@ namespace MyFinances
 
         }
 
+        private void RefreshCurrentView()
+        {
+            TransactionsListBox.Items.Clear();
+            foreach (var transaction in Controller.GetTransactionsList(null, null))
+            {
+                TransactionsListBox.Items.Add(transaction.DateTime);
+            }
+        }
+
         public void ModalWindowClosed()
         {
             _modalWindowOpened = false;
+            RefreshCurrentView();
         }
 
         private void DataWindow_Closing(object sender, CancelEventArgs e)

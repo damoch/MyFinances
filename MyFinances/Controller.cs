@@ -52,6 +52,24 @@ namespace MyFinances
              
         }
 
+        public List<Transaction> GetTransactionsList(DateTime? timeSpan, TransactionType? type)
+        {
+            var result = _dataModel.Transactions;
+
+            if (timeSpan != null)
+            {
+                var ts = timeSpan.Value;
+                result = (List<Transaction>) result.Where(t => t.DateTime.Month.Equals(ts.Month));
+            }
+
+            if (type != null)
+            {
+                result = (List<Transaction>) result.Where(t => t.TransactionType.Equals(type));
+            }
+
+            return result;
+        }
+
         public decimal GetEndOfMonthPrognosis()
         {
             var averageTransaction = GetAverageOutcomeValue();
