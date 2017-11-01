@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace MyFinances
 {
     public class Controller
     {
-        private readonly DataModel _dataModel;
+        private DataModel _dataModel;
         public Controller()
         {
             _dataModel = new DataModel();
@@ -22,6 +24,30 @@ namespace MyFinances
         public decimal GetAmmount()
         {
             return _dataModel.Money;
+        }
+
+        public void RemoveTransaction(Transaction t)
+        {
+            if(t == null)return;
+            var removedElems = _dataModel.Transactions.RemoveAll(x => x.Id == t.Id);
+            if(removedElems < 1)return;
+            switch (t.TransactionType)
+            {
+                case TransactionType.Income:
+                    _dataModel.Money -= t.Ammount;
+                    break;
+                case TransactionType.Outcome:
+                    _dataModel.Money += t.Ammount;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public void ModifyTransaction(Transaction t)
+        {
+            RemoveTransaction(t);
+            _dataModel.Transactions.Add(t);
         }
 
         public void AddTransaction(DateTime date, decimal ammount, string title, TransactionType type)
@@ -38,6 +64,7 @@ namespace MyFinances
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
+            transaction.Id = GetNextId();
             _dataModel.Transactions.Add(transaction);
         }
 
@@ -48,8 +75,18 @@ namespace MyFinances
             .ToList();
 
             var moneyAmmounts = transactionsFromThisMonth.Select(t => t.Ammount).ToList(); 
-            return MathUtils.Average(moneyAmmounts);
+            return moneyAmmounts.Count > 0 ? moneyAmmounts.Average() : 0;
              
+        }
+
+        public Transaction GetById(int id)
+        {
+            return _dataModel.Transactions.FirstOrDefault(x => x.Id == id);
+        }
+
+        private int GetNextId()
+        {
+            return  _dataModel.Transactions.Count == 0 ?  1 :  _dataModel.Transactions.Max(x => x.Id) + 1;
         }
 
         public List<Transaction> GetTransactionsList(DateTime? timeSpan, TransactionType? type)
@@ -67,7 +104,14 @@ namespace MyFinances
                 result = (List<Transaction>) result.Where(t => t.TransactionType.Equals(type));
             }
 
+            result.Sort((t1, t2) =>t1.DateTime.CompareTo(t2.DateTime));
             return result;
+        }
+
+        internal void RemoveTransaction(int id)
+        {
+            var t = _dataModel.Transactions.FirstOrDefault(x => x.Id == id);
+            RemoveTransaction(t);
         }
 
         public decimal GetEndOfMonthPrognosis()
@@ -82,12 +126,14 @@ namespace MyFinances
 
         public void SaveDataModel(string path)
         {
-            
+            var json = JsonConvert.SerializeObject(_dataModel);
+            File.WriteAllText(path, json);
         }
 
         public void LoadDataModel(string path)
         {
-            
+            var json = File.ReadAllText(path);
+            _dataModel = JsonConvert.DeserializeObject<DataModel>(json);
         }
        
     }

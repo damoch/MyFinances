@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace MyFinances
 {
@@ -29,6 +30,22 @@ namespace MyFinances
             TransactionType = type;
         }
 
+        [JsonConstructor]
+        public Transaction(DateTime date, decimal ammount, string title, TransactionType type, int id)
+        {
+            DateTime = date;
+            Ammount = ammount;
+            Title = title;
+            TransactionType = type;
+            Id = id;
+        }
+
+        public override string ToString()
+        {
+            return DateTime.ToShortDateString() + " - " + Title;
+        }
+
+        public int Id { get; set; }
         public string Title { get; set; }
         public DateTime DateTime { get; set; }
         public decimal Ammount { get; set; }

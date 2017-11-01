@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace MyFinances
 {
@@ -13,6 +10,13 @@ namespace MyFinances
         public DataModel()
         {
             Transactions = new List<Transaction>();
+        }
+
+        [JsonConstructor]
+        public DataModel(List<Transaction> transactions, decimal money)
+        {
+            Transactions = transactions;
+            Money = money;
         }
 
     }

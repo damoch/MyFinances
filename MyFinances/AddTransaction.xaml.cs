@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -20,24 +21,67 @@ namespace MyFinances
     /// <summary>
     /// Interaction logic for AddTransaction.xaml
     /// </summary>
-    public partial class AddTransaction : ModalBase
+    public partial class AddTransaction
     {
+        private Transaction _transaction;
+
         public AddTransaction(MainWindow mainWindow): base(mainWindow)
         {
+            _transaction = null;
             InitializeComponent();
         }
-        
+
+        public AddTransaction(MainWindow mainWindow, Transaction transaction) : this(mainWindow)
+        {
+            InitializeComponent();
+            SetTransactionValues(transaction);
+        }
+
+        private void SetTransactionValues(Transaction transaction)
+        {
+            _transaction = transaction;
+            TransactionDatePicker.SelectedDate = transaction.DateTime;
+            TransactionDescriptionTextBox.Text = transaction.Title;
+            AmmountTextBox.Text = transaction.Ammount.ToString();
+            if (transaction.TransactionType == TransactionType.Income)
+                IncomeRadioButton.IsChecked = true;
+            else
+                OutcomeRadioButton.IsChecked = true;
+            
+        }
+
         private void AddTransactionButton_Click(object sender, RoutedEventArgs e)
         {
-            if (TransactionDatePicker.SelectedDate != null)
+            if (_transaction != null && TransactionValid())
             {
-                DateTime date = TransactionDatePicker.SelectedDate.Value;
+                _transaction.DateTime = TransactionDatePicker.SelectedDate.Value;
+                _transaction.Title = TransactionDescriptionTextBox.Text;
+                _transaction.Ammount = ConvertUtils.StringToDecimal(AmmountTextBox.Text);
+                _transaction.TransactionType = IncomeRadioButton.IsChecked != null && (bool)IncomeRadioButton.IsChecked ? TransactionType.Income : TransactionType.Outcome;
+                GetController().ModifyTransaction(_transaction);
+            }
+            else if (TransactionValid())
+            {
+                var date = TransactionDatePicker.SelectedDate.Value;
                 var desc = TransactionDescriptionTextBox.Text;
                 var ammount = ConvertUtils.StringToDecimal(AmmountTextBox.Text);
                 var type = IncomeRadioButton.IsChecked != null && (bool) IncomeRadioButton.IsChecked ? TransactionType.Income : TransactionType.Outcome;
                 GetController().AddTransaction(date, ammount,desc, type);
             }
+            Close();
         }
+
+        private bool TransactionValid()
+        {
+            return TransactionDatePicker.SelectedDate != null && CheckTextBox(TransactionDescriptionTextBox) && CheckTextBox(AmmountTextBox);
+
+        }
+
+        private bool CheckTextBox(TextBox box)
+        {
+            return box.Text != "";
+        }
+
 
         private void AmmountTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -51,6 +95,11 @@ namespace MyFinances
             //kinda crappy
             e.Handled = !(Regex.IsMatch(input, @"^\d+$") || (input.Equals(".") && !current.Contains(".")));
             
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

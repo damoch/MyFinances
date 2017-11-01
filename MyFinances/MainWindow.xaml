@@ -9,9 +9,19 @@
         Closing="DataWindow_Closing"  >
     <Grid>
         <Grid HorizontalAlignment="Left" Height="299" Margin="10,10,0,0" VerticalAlignment="Top" Width="497">
-            <ListBox x:Name="TransactionsListBox" HorizontalAlignment="Left" Height="225" Margin="10,41,0,0" VerticalAlignment="Top" Width="156"/>
-            <Label x:Name="label" Content="Transactions" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="117"/>
-            <Button x:Name="AddTransactionButton" Content="Add new" HorizontalAlignment="Left" Margin="10,271,0,0" VerticalAlignment="Top" Width="75" Click="AddTransactionButton_Click"/>
+            <ListBox PreviewMouseDown="TransactionsListBox_OnPreviewMouseDown" x:Name="TransactionsListBox" HorizontalAlignment="Left" Height="225" Margin="10,26,0,0" VerticalAlignment="Top" Width="249"/>
+            <Label x:Name="label" Content="Transactions" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="117"/>
+            <Button x:Name="AddTransactionButton" Content="Add new" HorizontalAlignment="Left" Margin="10,256,0,0" VerticalAlignment="Top" Width="55" Click="AddTransactionButton_Click"/>
+            <Button x:Name="EditTransactionButton" Content="Edit selected" HorizontalAlignment="Left" Margin="70,256,0,0" VerticalAlignment="Top" Width="83" Click="EditTransactionButton_Click"/>
+            <Button x:Name="RemoveTransactionButton" Content="Remove Selected" HorizontalAlignment="Left" Margin="158,256,0,0" VerticalAlignment="Top" Width="101" Click="RemoveTransactionButton_Click"/>
+            <TextBox x:Name="MoneyAmmountTextBox" HorizontalAlignment="Left" Height="23" Margin="264,26,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+            <Label x:Name="label1" Content="Balance" HorizontalAlignment="Left" Margin="264,0,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="PrognosisTextBox" HorizontalAlignment="Left" Height="23" Margin="264,80,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+            <Label x:Name="label2" Content="End of month prognosis" HorizontalAlignment="Left" Margin="264,54,0,0" VerticalAlignment="Top"/>
+            <Button x:Name="SaveDataModelButton" Content="Save data" HorizontalAlignment="Left" Margin="327,279,0,0" VerticalAlignment="Top" Width="75" Click="SaveDataModelButton_Click"/>
+            <Button x:Name="LoadDataModelButton" Content="Load data" HorizontalAlignment="Left" Margin="412,279,0,0" VerticalAlignment="Top" Width="75" Click="LoadDataModelButton_Click"/>
+            <Label x:Name="label3" Content="Average outcome" HorizontalAlignment="Left" Margin="264,108,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="AverageOutcomeTextBox" HorizontalAlignment="Left" Height="23" Margin="264,134,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
         </Grid>
 
     </Grid>
