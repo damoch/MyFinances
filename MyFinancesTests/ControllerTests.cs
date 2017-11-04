@@ -38,5 +38,46 @@ namespace MyFinancesTests
             controller.AddTransaction(DateTime.Today, 14m, "test3", TransactionType.Outcome);
             var prognosis = controller.GetEndOfMonthPrognosis();
         }
+
+        [TestMethod]
+        public void RemoveTransactionTest()
+        {
+            var t = new Transaction( DateTime.Today, 10m, "tst", TransactionType.Outcome, 1);
+            var count = controller.GetTransactionsList().Count;
+            controller.AddTransaction(t);
+            controller.RemoveTransaction(t);
+            var newCount = controller.GetTransactionsList().Count;
+            Assert.AreEqual(count, newCount);
+        }
+        [TestMethod]
+        public void RemoveTransactionWithoutIdTest()
+        {
+            var t = new Transaction(DateTime.Today, 1m, "tst", TransactionType.Income);
+            var count = controller.GetTransactionsList().Count;
+            t.Id = controller.AddTransaction(t);
+            controller.RemoveTransaction(t);
+            var newCount = controller.GetTransactionsList().Count;
+            Assert.AreEqual(count, newCount);
+        }
+
+        [TestMethod]
+        public void RemoveNullTransactionTest()
+        {
+            controller.RemoveTransaction(null);
+        }
+
+        [TestMethod]
+        public void AddNullTransactionTest()
+        {
+            controller.AddTransaction(null);
+        }
+
+        [TestMethod]
+        public void AddInvalidTransactionTest()
+        {
+            var t = new Transaction(DateTime.Now, 0, null, TransactionType.Income);
+            controller.AddTransaction(t);
+            var x = t.ToString();
+        }
     }
 }

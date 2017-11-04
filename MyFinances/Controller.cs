@@ -29,6 +29,10 @@ namespace MyFinances
         public void RemoveTransaction(Transaction t)
         {
             if(t == null)return;
+            if (t.Id == 0)
+            {
+                _dataModel.Transactions.Remove(t);
+            }
             var removedElems = _dataModel.Transactions.RemoveAll(x => x.Id == t.Id);
             if(removedElems < 1)return;
             switch (t.TransactionType)
@@ -50,7 +54,12 @@ namespace MyFinances
             _dataModel.Transactions.Add(t);
         }
 
-        public void AddTransaction(DateTime date, decimal ammount, string title, TransactionType type)
+        public int AddTransaction(Transaction t)
+        {
+            if (t == null) return 0;
+            return AddTransaction(t.DateTime, t.Ammount, t.Title, t.TransactionType);
+        }
+        public int AddTransaction(DateTime date, decimal ammount, string title, TransactionType type)
         {
            var transaction = new Transaction(date, ammount, title, type);
             switch (type)
@@ -66,6 +75,7 @@ namespace MyFinances
             }
             transaction.Id = GetNextId();
             _dataModel.Transactions.Add(transaction);
+            return transaction.Id;
         }
 
         public decimal GetAverageOutcomeValue()
@@ -87,6 +97,11 @@ namespace MyFinances
         private int GetNextId()
         {
             return  _dataModel.Transactions.Count == 0 ?  1 :  _dataModel.Transactions.Max(x => x.Id) + 1;
+        }
+
+        public List<Transaction> GetTransactionsList()
+        {
+            return _dataModel.Transactions;
         }
 
         public List<Transaction> GetTransactionsList(DateTime? timeSpan, TransactionType? type)

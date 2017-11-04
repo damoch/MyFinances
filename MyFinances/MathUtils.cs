@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MyFinances
 {
@@ -11,20 +12,8 @@ namespace MyFinances
             {
                 return 0;
             }
-            var sum = Sum(values);
+            var sum = values.Sum();
             return Math.Round((sum / values.Count),2);
-        }
-
-        private static decimal Sum(List<decimal> values)
-        {
-            decimal sum = 0;
-
-            foreach (var elem in values)
-            {
-                sum += elem;
-            }
-
-            return sum;
         }
 
         public static decimal Variance(List<decimal> values)
@@ -33,14 +22,8 @@ namespace MyFinances
             {
                 return 0;
             }
-            decimal avg = Average(values);
-            decimal result = 0;
-            foreach (var val in values)
-            {
-                var valTmp = (double) val;
-                var avgTmp = (double) avg;
-                result += (decimal) Math.Pow((valTmp - avgTmp), 2);
-            }
+            var avg = Average(values);
+            var result = (from val in values select (double) val into valTmp let avgTmp = (double) avg select (decimal) Math.Pow((valTmp - avgTmp), 2)).Sum();
             return result / values.Count;
         }
 
@@ -58,13 +41,7 @@ namespace MyFinances
 
         public static decimal CalculatePrognosis(int daysInMonthLeft, decimal averageTransaction, decimal actualMoney)
         {
-            var prognosis = actualMoney;
-            prognosis -= averageTransaction * daysInMonthLeft;
-            //for (int i = 0; i < daysInMonthLeft; i++)
-            //{
-            //    prognosis += averageTransaction;
-            //}
-            return prognosis;
+            return actualMoney - averageTransaction * daysInMonthLeft;
         }
     }
 }

@@ -50,5 +50,29 @@ namespace MyFinances
         public DateTime DateTime { get; set; }
         public decimal Ammount { get; set; }
         public TransactionType TransactionType { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            var other = (Transaction) obj;
+            return Equals(other);
+        }
+
+        protected bool Equals(Transaction other)
+        {
+            return Id == other.Id && string.Equals(Title, other.Title) && DateTime.Equals(other.DateTime) && Ammount == other.Ammount && TransactionType == other.TransactionType;
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = Id;
+                hashCode = (hashCode * 397) ^ (Title != null ? Title.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ DateTime.GetHashCode();
+                hashCode = (hashCode * 397) ^ Ammount.GetHashCode();
+                hashCode = (hashCode * 397) ^ (int) TransactionType;
+                return hashCode;
+            }
+        }
     }
 }
