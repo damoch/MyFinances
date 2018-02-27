@@ -131,18 +131,26 @@ namespace MyFinances
 
         public decimal GetEndOfMonthPrognosis()
         {
-            var averageTransaction = GetAverageOutcomeValue();
-            var actualMoney = _dataModel.Money;
             var daysInCurrentMonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
             var daysInMonthLeft = daysInCurrentMonth - DateTime.Now.Day;
 
-            return MathUtils.CalculatePrognosis(daysInMonthLeft, averageTransaction, actualMoney);
+            return GetPrognosisFor(daysInMonthLeft);
+        }
+
+        public decimal GetPrognosisFor(int numberOfDays)
+        {
+            var averageTransaction = GetAverageOutcomeValue();
+            var actualMoney = _dataModel.Money;
+            return MathUtils.CalculatePrognosis(numberOfDays, averageTransaction, actualMoney);
         }
 
         public void SaveDataModel(string path)
         {
-            var json = JsonConvert.SerializeObject(_dataModel);
-            File.WriteAllText(path, json);
+            Task.Factory.StartNew(() =>
+            {
+                var json = JsonConvert.SerializeObject(_dataModel);
+                File.WriteAllText(path, json);
+            });
         }
 
         public void LoadDataModel(string path)

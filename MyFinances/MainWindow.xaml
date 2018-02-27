@@ -16,14 +16,16 @@
             <Button x:Name="RemoveTransactionButton" Content="Remove Selected" HorizontalAlignment="Left" Margin="158,256,0,0" VerticalAlignment="Top" Width="101" Click="RemoveTransactionButton_Click"/>
             <TextBox x:Name="MoneyAmmountTextBox" HorizontalAlignment="Left" Height="23" Margin="264,26,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
             <Label x:Name="label1" Content="Balance" HorizontalAlignment="Left" Margin="264,0,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="PrognosisTextBox" HorizontalAlignment="Left" Height="23" Margin="264,80,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
-            <Label x:Name="label2" Content="End of month prognosis" HorizontalAlignment="Left" Margin="264,54,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="PrognosisTextBox" HorizontalAlignment="Left" Height="23" Margin="264,144,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+            <Label x:Name="label2" Content="End of month prognosis" HorizontalAlignment="Left" Margin="264,113,0,0" VerticalAlignment="Top"/>
             <Button x:Name="SaveDataModelButton" Content="Save data" HorizontalAlignment="Left" Margin="327,279,0,0" VerticalAlignment="Top" Width="75" Click="SaveDataModelButton_Click"/>
             <Button x:Name="LoadDataModelButton" Content="Load data" HorizontalAlignment="Left" Margin="412,279,0,0" VerticalAlignment="Top" Width="75" Click="LoadDataModelButton_Click"/>
-            <Label x:Name="label3" Content="Average outcome" HorizontalAlignment="Left" Margin="264,108,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="AverageOutcomeTextBox" HorizontalAlignment="Left" Height="23" Margin="264,134,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+            <Label x:Name="label3" Content="Average outcome" HorizontalAlignment="Left" Margin="264,54,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="AverageOutcomeTextBox" HorizontalAlignment="Left" Height="23" Margin="264,85,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+            <Label Content="30 days prognosis" HorizontalAlignment="Left" Margin="264,172,0,0" VerticalAlignment="Top" Width="138"/>
+            <TextBox x:Name="PrognosisInDays" HorizontalAlignment="Left" Height="23" Margin="264,203,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
         </Grid>
 
     </Grid>
-    
+
 </Window>

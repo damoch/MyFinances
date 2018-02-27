@@ -2,18 +2,22 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MyFinances;
+using System.Linq;
 
 namespace MyFinancesTests
 {
     [TestClass()]
     public class MathUtilsTests
     {
-        [TestMethod()]
-        public void AverageTest()
+        [TestMethod]
+        public void MathPrognosisTest()
         {
-            var testData = new List<decimal> {1,2,3,4,5,67};
-            var result = MathUtils.Average(testData);
-            Assert.AreEqual(13.67m,result);
+            var average = new List<decimal> {10m, 20m, 11m }.Average();
+            var days = 10;
+            var startValue = 300m;
+            var predicted = 163.33m;
+            var actual = Math.Round(MathUtils.CalculatePrognosis(days, average, startValue),2);
+            Assert.AreEqual(predicted, actual);
         }
     }
 }

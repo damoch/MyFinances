@@ -29,6 +29,7 @@ namespace MyFinances
         {
             _transaction = null;
             InitializeComponent();
+            TransactionDatePicker.SelectedDate = DateTime.Now;
         }
 
         public AddTransaction(MainWindow mainWindow, Transaction transaction) : this(mainWindow)

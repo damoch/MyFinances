@@ -63,6 +63,7 @@ namespace MyFinances
             MoneyAmmountTextBox.Text = Controller.GetAmmount().ToString();
             PrognosisTextBox.Text = Controller.GetEndOfMonthPrognosis().ToString();
             AverageOutcomeTextBox.Text = Controller.GetAverageOutcomeValue().ToString();
+            PrognosisInDays.Text = Controller.GetPrognosisFor(30).ToString();
         }
 
         public void ModalWindowClosed()
@@ -84,7 +85,7 @@ namespace MyFinances
 
         private void DataWindow_Closing(object sender, CancelEventArgs e)
         {
-            _currentModal.Close();
+            _currentModal?.Close();
         }
 
         private void EditTransactionButton_Click(object sender, RoutedEventArgs e)

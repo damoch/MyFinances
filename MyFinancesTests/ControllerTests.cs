@@ -36,7 +36,7 @@ namespace MyFinancesTests
             controller.AddTransaction(DateTime.Today, 24m, "test1", TransactionType.Outcome);
             controller.AddTransaction(DateTime.Today, 30m, "test2", TransactionType.Outcome);
             controller.AddTransaction(DateTime.Today, 14m, "test3", TransactionType.Outcome);
-            var prognosis = controller.GetEndOfMonthPrognosis();
+            Assert.Inconclusive("End of month prognosis test resut: " + controller.GetEndOfMonthPrognosis());
         }
 
         [TestMethod]
@@ -78,6 +78,19 @@ namespace MyFinancesTests
             var t = new Transaction(DateTime.Now, 0, null, TransactionType.Income);
             controller.AddTransaction(t);
             var x = t.ToString();
+        }
+
+        [TestMethod]
+        public void PrognosisWithSetDaysTest()
+        {
+            var starter = 300m;
+            controller.InitializeDataModel(starter);
+            controller.AddTransaction(DateTime.Today, 24m, "test1", TransactionType.Outcome);
+            controller.AddTransaction(DateTime.Today, 30m, "test2", TransactionType.Outcome);
+            controller.AddTransaction(DateTime.Today, 14m, "test3", TransactionType.Outcome);
+            var prognosis = Math.Round(controller.GetPrognosisFor(10),2);
+            var predicted = 5.33m;
+            Assert.AreEqual(predicted, prognosis);
         }
     }
 }
