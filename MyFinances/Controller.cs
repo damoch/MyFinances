@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -11,8 +10,10 @@ namespace MyFinances
     public class Controller
     {
         private DataModel _dataModel;
+        private int _defaultMonth;
         public Controller()
         {
+            _defaultMonth = DateTime.Now.Month;
             _dataModel = new DataModel();
         }
 
@@ -79,14 +80,36 @@ namespace MyFinances
             return transaction.Id;
         }
 
-        public decimal GetAverageOutcomeValue()
+        public decimal GetAverageOutcomeValue(int month = -1, bool calculateDaily = true)
         {
+            if (month == -1) month = _defaultMonth;
             var transactionsFromThisMonth =_dataModel.Transactions.Where(
-                t => t.DateTime.Month.Equals(DateTime.Now.Month) && t.TransactionType.Equals(TransactionType.Outcome) && !t.IsRegular)
+                t => t.DateTime.Month.Equals(month) && t.TransactionType.Equals(TransactionType.Outcome) && !t.IsRegular)
             .ToList();
 
-            var moneyAmmounts = transactionsFromThisMonth.Select(t => t.Ammount).ToList(); 
-            return moneyAmmounts.Count > 0 ? moneyAmmounts.Average() : 0;
+            if (transactionsFromThisMonth.Count == 0) return 0;
+
+            if (!calculateDaily)
+                return transactionsFromThisMonth.Average(t => t.Ammount);
+
+            var sortedTransactions = new Dictionary<DateTime, List<Transaction>>();
+            foreach(var transaction in transactionsFromThisMonth)
+            {
+                if (!sortedTransactions.Keys.Contains(transaction.DateTime))
+                {
+                    sortedTransactions.Add(transaction.DateTime, new List<Transaction>());
+                }
+                sortedTransactions[transaction.DateTime].Add(transaction);
+            }
+
+            var moneyAmmounts = new List<decimal>(); 
+
+            foreach(var transactionList in sortedTransactions.Keys)
+            {
+                moneyAmmounts.Add(sortedTransactions[transactionList].Average(x => x.Ammount));
+            }
+
+            return moneyAmmounts.Average();
              
         }
 

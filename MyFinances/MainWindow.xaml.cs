@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -52,7 +53,7 @@ namespace MyFinances
             RemoveTransactionButton.IsEnabled = false;
             MoneyAmmountTextBox.Text = Controller.GetAmmount().ToString();
             PrognosisTextBox.Text = Controller.GetEndOfMonthPrognosis().ToString();
-            AverageOutcomeTextBox.Text = Controller.GetAverageOutcomeValue().ToString();
+            AverageOutcomeTextBox.Text = Math.Round(Controller.GetAverageOutcomeValue(), 2).ToString();
             PrognosisInDays.Text = Controller.GetPrognosisFor(30).ToString();
         }
 

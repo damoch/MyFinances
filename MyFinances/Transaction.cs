@@ -38,7 +38,7 @@ namespace MyFinances
 
         public override string ToString()
         {
-            return DateTime.ToShortDateString() + " - " + Title;
+            return DateTime.ToShortDateString() + " - " + Title + " (" + Ammount + ")";
         }
 
         public int Id { get; set; }

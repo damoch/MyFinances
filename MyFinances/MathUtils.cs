@@ -8,7 +8,7 @@ namespace MyFinances
     {
         public static decimal CalculatePrognosis(int daysInMonthLeft, decimal averageTransaction, decimal actualMoney)
         {
-            return actualMoney - averageTransaction * daysInMonthLeft;
+            return Math.Round(actualMoney - averageTransaction * daysInMonthLeft, 2, MidpointRounding.AwayFromZero);
         }
     }
 }
