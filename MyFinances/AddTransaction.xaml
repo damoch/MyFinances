@@ -12,12 +12,13 @@
         <TextBox PreviewTextInput="PreviewTextInpuxt" x:Name="AmmountTextBox" HorizontalAlignment="Left" Height="23" Margin="10,105,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="AmmountTextBox_TextChanged"/>
         <TextBox x:Name="TransactionDescriptionTextBox" HorizontalAlignment="Left" Height="137" Margin="140,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="AddTransactionButton" Content="Save" HorizontalAlignment="Left" Margin="10,223,0,0" VerticalAlignment="Top" Width="75" Click="AddTransactionButton_Click"/>
-        <RadioButton x:Name="IncomeRadioButton" Content="Income" HorizontalAlignment="Left" Margin="10,156,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="OutcomeRadioButton" Content="Outcome" HorizontalAlignment="Left" Margin="10,176,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="IncomeRadioButton" Content="Income" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.494,-0.111"/>
+        <RadioButton x:Name="OutcomeRadioButton" Content="Outcome" HorizontalAlignment="Left" Margin="10,165,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label" Content="Ammount" HorizontalAlignment="Left" Margin="10,79,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label1" Content="Description" HorizontalAlignment="Left" Margin="140,15,0,0" VerticalAlignment="Top" Width="120"/>
         <Label x:Name="label2" Content="Date" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" Width="102"/>
         <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Left" Margin="110,223,0,0" VerticalAlignment="Top" Width="75" Click="CancelButton_Click"/>
+        <CheckBox x:Name="IsRegularTransactionCheckBox" Content="Regular transaction" HorizontalAlignment="Left" Margin="10,185,0,0" VerticalAlignment="Top" Width="150" Height="33"/>
 
     </Grid>
 </local:ModalBase>

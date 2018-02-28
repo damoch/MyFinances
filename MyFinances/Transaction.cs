@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace MyFinances
@@ -50,6 +46,7 @@ namespace MyFinances
         public DateTime DateTime { get; set; }
         public decimal Ammount { get; set; }
         public TransactionType TransactionType { get; set; }
+        public bool IsRegular { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -59,7 +56,12 @@ namespace MyFinances
 
         protected bool Equals(Transaction other)
         {
-            return Id == other.Id && string.Equals(Title, other.Title) && DateTime.Equals(other.DateTime) && Ammount == other.Ammount && TransactionType == other.TransactionType;
+            return Id == other.Id && 
+                string.Equals(Title, other.Title) && 
+                DateTime.Equals(other.DateTime) && 
+                Ammount == other.Ammount && 
+                TransactionType == other.TransactionType &&
+                IsRegular == other.IsRegular;
         }
 
         public override int GetHashCode()
@@ -71,6 +73,7 @@ namespace MyFinances
                 hashCode = (hashCode * 397) ^ DateTime.GetHashCode();
                 hashCode = (hashCode * 397) ^ Ammount.GetHashCode();
                 hashCode = (hashCode * 397) ^ (int) TransactionType;
+                hashCode = (hashCode * 397) ^ IsRegular.GetHashCode();
                 return hashCode;
             }
         }

@@ -67,7 +67,8 @@ namespace MyFinances
                 var desc = TransactionDescriptionTextBox.Text;
                 var ammount = ConvertUtils.StringToDecimal(AmmountTextBox.Text);
                 var type = IncomeRadioButton.IsChecked != null && (bool) IncomeRadioButton.IsChecked ? TransactionType.Income : TransactionType.Outcome;
-                GetController().AddTransaction(date, ammount,desc, type);
+                var isRegular = (bool)IsRegularTransactionCheckBox.IsChecked;
+                GetController().AddTransaction(date, ammount,desc, type, isRegular);
             }
             Close();
         }

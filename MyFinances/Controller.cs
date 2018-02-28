@@ -57,9 +57,9 @@ namespace MyFinances
         public int AddTransaction(Transaction t)
         {
             if (t == null) return 0;
-            return AddTransaction(t.DateTime, t.Ammount, t.Title, t.TransactionType);
+            return AddTransaction(t.DateTime, t.Ammount, t.Title, t.TransactionType, t.IsRegular);
         }
-        public int AddTransaction(DateTime date, decimal ammount, string title, TransactionType type)
+        public int AddTransaction(DateTime date, decimal ammount, string title, TransactionType type, bool isRegular = false)
         {
            var transaction = new Transaction(date, ammount, title, type);
             switch (type)
@@ -74,6 +74,7 @@ namespace MyFinances
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
             transaction.Id = GetNextId();
+            transaction.IsRegular = isRegular;
             _dataModel.Transactions.Add(transaction);
             return transaction.Id;
         }
@@ -81,7 +82,7 @@ namespace MyFinances
         public decimal GetAverageOutcomeValue()
         {
             var transactionsFromThisMonth =_dataModel.Transactions.Where(
-                t => t.DateTime.Month.Equals(DateTime.Now.Month) && t.TransactionType.Equals(TransactionType.Outcome))
+                t => t.DateTime.Month.Equals(DateTime.Now.Month) && t.TransactionType.Equals(TransactionType.Outcome) && !t.IsRegular)
             .ToList();
 
             var moneyAmmounts = transactionsFromThisMonth.Select(t => t.Ammount).ToList(); 
