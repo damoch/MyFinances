@@ -106,7 +106,7 @@ namespace MyFinances
 
             foreach(var transactionList in sortedTransactions.Keys)
             {
-                moneyAmmounts.Add(sortedTransactions[transactionList].Average(x => x.Ammount));
+                moneyAmmounts.Add(sortedTransactions[transactionList].Sum(x => x.Ammount));
             }
 
             return moneyAmmounts.Average();

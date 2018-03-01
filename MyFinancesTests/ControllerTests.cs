@@ -89,7 +89,7 @@ namespace MyFinancesTests
             controller.AddTransaction(DateTime.Today, 30m, "test2", TransactionType.Outcome, false);
             controller.AddTransaction(DateTime.Today, 14m, "test3", TransactionType.Outcome, false);
             var prognosis = controller.GetPrognosisFor(10);
-            var predicted = 5.33m;
+            var predicted = -448m;
             Assert.AreEqual(predicted, prognosis);
         }
 
@@ -103,7 +103,7 @@ namespace MyFinancesTests
             controller.AddTransaction(DateTime.Today, 14m, "test3", TransactionType.Outcome, false);
             controller.AddTransaction(DateTime.Today, 2m, "test3", TransactionType.Outcome, true);
             var prognosis = controller.GetPrognosisFor(10);
-            var predicted = 3.33m;
+            var predicted = -450m;
             Assert.AreEqual(predicted, prognosis);
         }
     }
