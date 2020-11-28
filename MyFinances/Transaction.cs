@@ -9,6 +9,8 @@ namespace MyFinances
         {
             DateTime = date;
             Ammount = ammount;
+            CreatedDate = DateTime.Now;
+            ModifiedDate = DateTime.Now;
         }
 
         public Transaction(DateTime date, decimal ammount, string title)
@@ -16,6 +18,8 @@ namespace MyFinances
             DateTime = date;
             Ammount = ammount;
             Title = title;
+            CreatedDate = DateTime.Now;
+            ModifiedDate = DateTime.Now;
         }
 
         public Transaction(DateTime date, decimal ammount, string title, TransactionType type)
@@ -24,6 +28,8 @@ namespace MyFinances
             Ammount = ammount;
             Title = title;
             TransactionType = type;
+            CreatedDate = DateTime.Now;
+            ModifiedDate = DateTime.Now;
         }
 
         [JsonConstructor]
@@ -34,6 +40,8 @@ namespace MyFinances
             Title = title;
             TransactionType = type;
             Id = id;
+            CreatedDate = DateTime.Now;
+            ModifiedDate = DateTime.Now;
         }
 
         public override string ToString()
@@ -44,6 +52,8 @@ namespace MyFinances
         public int Id { get; set; }
         public string Title { get; set; }
         public DateTime DateTime { get; set; }
+        public DateTime CreatedDate { get; private set; }
+        public DateTime ModifiedDate { get; set; }
         public decimal Ammount { get; set; }
         public TransactionType TransactionType { get; set; }
         public bool IsRegular { get; set; }

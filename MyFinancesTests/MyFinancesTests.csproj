@@ -51,6 +51,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ControllerExtensions.cs" />
     <Compile Include="ControllerTests.cs" />
     <Compile Include="MathUtilsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

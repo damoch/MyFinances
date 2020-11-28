@@ -106,5 +106,28 @@ namespace MyFinancesTests
             var predicted = -450m;
             Assert.AreEqual(predicted, prognosis);
         }
+
+        [TestMethod]
+        public void ModifyTransactionTest()
+        {
+            decimal startAmmount = 100;
+            var testTran = new Transaction(DateTime.Now, startAmmount);
+            var testId = controller.AddTransaction(testTran);
+            testTran.Ammount = 200;
+            testTran.Id = testId;
+            var newTestId = controller.ModifyTransaction(testTran);
+            var newTran = controller.GetById(newTestId);
+
+            Assert.AreEqual(testId, newTestId);
+            Assert.AreNotEqual(startAmmount, newTran.Ammount);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException))]
+        public void ModifyNonexistentTransactionTest()
+        {
+            var testTran = new Transaction(DateTime.Now, 12);
+            var testId = controller.ModifyTransaction(testTran);
+        }
     }
 }

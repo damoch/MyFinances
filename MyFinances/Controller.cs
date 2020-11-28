@@ -49,17 +49,23 @@ namespace MyFinances
             }
         }
 
-        public void ModifyTransaction(Transaction t)
+        public int ModifyTransaction(Transaction t)
         {
-            RemoveTransaction(t);
-            _dataModel.Transactions.Add(t);
+            var transaction = _dataModel.Transactions.FirstOrDefault(x => x.Id == t.Id);
+            if(transaction == null)
+            {
+                throw new IndexOutOfRangeException("Incorrect transaction ID");
+            }
+            var i = _dataModel.Transactions.IndexOf(transaction);
+            _dataModel.Transactions[i].DateTime = t.DateTime;
+            _dataModel.Transactions[i].Ammount = t.Ammount;
+            _dataModel.Transactions[i].Title = t.Title;
+            _dataModel.Transactions[i].TransactionType = t.TransactionType;
+            _dataModel.Transactions[i].IsRegular = t.IsRegular;
+            _dataModel.Transactions[i].ModifiedDate = DateTime.Now;
+            return _dataModel.Transactions[i].Id;
         }
 
-        public int AddTransaction(Transaction t)
-        {
-            if (t == null) return 0;
-            return AddTransaction(t.DateTime, t.Ammount, t.Title, t.TransactionType, t.IsRegular);
-        }
         public int AddTransaction(DateTime date, decimal ammount, string title, TransactionType type, bool isRegular = false)
         {
            var transaction = new Transaction(date, ammount, title, type);
@@ -182,6 +188,5 @@ namespace MyFinances
             var json = File.ReadAllText(path);
             _dataModel = JsonConvert.DeserializeObject<DataModel>(json);
         }
-       
     }
 }

@@ -59,6 +59,7 @@ namespace MyFinances
                 _transaction.Title = TransactionDescriptionTextBox.Text;
                 _transaction.Ammount = ConvertUtils.StringToDecimal(AmmountTextBox.Text);
                 _transaction.TransactionType = IncomeRadioButton.IsChecked != null && (bool)IncomeRadioButton.IsChecked ? TransactionType.Income : TransactionType.Outcome;
+                _transaction.IsRegular = (bool)IsRegularTransactionCheckBox.IsChecked;
                 GetController().ModifyTransaction(_transaction);
             }
             else if (TransactionValid())
