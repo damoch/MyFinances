@@ -48,7 +48,9 @@ namespace MyFinances
                 IncomeRadioButton.IsChecked = true;
             else
                 OutcomeRadioButton.IsChecked = true;
-            
+
+            TransactionCreatedLabel.Content = $"Creation date: {transaction.CreatedDate:dd.MM.yyyy/HH:mm:ss}";
+            TransactionModifiedLabel.Content = $"Last modification: {transaction.ModifiedDate:dd.MM.yyyy/HH:mm:ss}";
         }
 
         private void AddTransactionButton_Click(object sender, RoutedEventArgs e)
